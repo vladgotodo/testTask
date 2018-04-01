@@ -15,6 +15,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.log4testng.Logger;
 import pages.MainPage;
+import pages.RouteChoicePage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -86,11 +87,13 @@ public class Test2 {
     @Test
     public void test() {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
+        RouteChoicePage routeChoicePage = PageFactory.initElements(driver, RouteChoicePage.class);
         mainPage.goTo()
                 .enterFrom("МОСКВА")
                 .enterTo("ТУЛА")
                 .enterDate("02.04.2018")
-                .clickSubmit()
+                .clickSubmit();
+        routeChoicePage
                 .selectTrain("739В")
                 .selectFreeCarriage();
     }
