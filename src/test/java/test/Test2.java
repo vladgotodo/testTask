@@ -13,6 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import org.testng.log4testng.Logger;
 import pages.MainPage;
 
 import java.io.File;
@@ -23,26 +24,30 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class Test2 {
-
-    private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(Test2.class);
     static Properties prop = new Properties();
     static InputStream in;
+    private static WebDriver driver;
 
     @BeforeClass
-    public static void setupClass() throws IOException {
-        in = new FileInputStream("C:\\Users\\Vladislav_Goncharenk\\Desktop\\testTasks\\testTask\\src\\main\\resources\\driver.properties");
-        prop.load(in);
-        in.close();
+    public static void setupClass() {
+        try {
+            in = new FileInputStream("C:\\Users\\Vladislav_Goncharenk\\Desktop\\testTasks\\testTask\\src\\main\\resources\\driver.properties");
+            prop.load(in);
+            in.close();
+        } catch (IOException e) {
+            log.error(e);
+        }
+
         String driverProp = (String) prop.get("browserName");
         switch (driverProp) {
-            case("chrome") :
-                WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                break;
-            case("firefox") :
+            case ("firefox"):
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
                 break;
+            default:
+                WebDriverManager.chromedriver().setup();
+                driver = new ChromeDriver();
         }
     }
 
@@ -61,15 +66,19 @@ public class Test2 {
     }
 
     @AfterMethod
-    public void takeScreenShotOnFailure(ITestResult testResult) throws IOException {
+    public void takeScreenShotOnFailure(ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE) {
-            File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File("errorScreenshots\\" + testResult.getName() + ".jpg"));
+            File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            try {
+                FileUtils.copyFile(scrFile, new File("errorScreenshots\\" + testResult.getName() + ".jpg"));
+            } catch (IOException e) {
+                log.error(e);
+            }
         }
     }
 
     @Test
-    public void test() throws IOException {
+    public void test() {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
         mainPage.goTo()
                 .enterFrom("Москва")

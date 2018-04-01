@@ -1,17 +1,15 @@
 package pages;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.File;
-import java.io.IOException;
+import org.testng.log4testng.Logger;
 
 public class MainPage {
-
+    private static final Logger log = Logger.getLogger(MainPage.class);
     private final WebDriver driver;
 
     @FindBy(id = "name0")
@@ -48,20 +46,9 @@ public class MainPage {
         return this;
     }
 
-    public MainPage clickSubmit() throws IOException {
+    public MainPage clickSubmit() {
         final Wait<WebDriver> wait = new WebDriverWait(driver, 5, 1000);
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
-        TakesScreenshot scrShot =((TakesScreenshot)driver);
-
-        File srcFile = scrShot.getScreenshotAs(OutputType.FILE);
-
-        //Move image file to new destination
-
-        File destFile = new File("C:\\Users\\Vladislav_Goncharenk\\Desktop\\testTasks\\testTask\\src\\main\\resources\\New Text Document.png");
-
-        //Copy file at destination
-
-        FileUtils.copyFile(srcFile, destFile);
         submitButton.click();
         return this;
     }
