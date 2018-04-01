@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -69,8 +71,12 @@ public class Test2 {
     public void takeScreenShotOnFailure(ITestResult testResult) {
         if (testResult.getStatus() == ITestResult.FAILURE) {
             File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            Date date = new Date();
+            SimpleDateFormat ft =
+                    new SimpleDateFormat ("yyyy-MM-dd-hh-mm-ss");
             try {
-                FileUtils.copyFile(scrFile, new File("errorScreenshots\\" + testResult.getName() + ".jpg"));
+                FileUtils.copyFile(scrFile, new File("errorScreenshots\\" + testResult.getName()
+                        + "-" + ft.format(date) + ".jpg"));
             } catch (IOException e) {
                 log.error(e);
             }
@@ -81,9 +87,11 @@ public class Test2 {
     public void test() {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
         mainPage.goTo()
-                .enterFrom("Москва")
-                .enterTo("Тула")
+                .enterFrom("МОСКВА")
+                .enterTo("ТУЛА")
                 .enterDate("02.04.2018")
-                .clickSubmit();
+                .clickSubmit()
+                .selectTrain("739В")
+                .selectFreeCarriage();
     }
 }
