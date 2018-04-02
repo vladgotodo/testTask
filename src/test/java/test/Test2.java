@@ -85,7 +85,7 @@ public class Test2 {
     }
 
     @Test
-    public void test() {
+    public void test_1() {
         MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
         RouteChoicePage routeChoicePage = PageFactory.initElements(driver, RouteChoicePage.class);
         mainPage.goTo()
@@ -96,5 +96,23 @@ public class Test2 {
         routeChoicePage
                 .selectTrain("739В")
                 .selectFreeCarriage();
+    }
+
+    @Test
+    public void test_2() {
+        MainPage mainPage = PageFactory.initElements(driver, MainPage.class);
+        mainPage.goTo()
+                .enterFrom("МОСКВА")
+                .enterTo("ТУЛА")
+                .enterDate("02.04.2018")
+                .openCalendar()
+                .selectDateByMonthNameAndDayNumber("Апрель", 5)
+                .checkDateTextBox("05.04.2018")
+                .openCalendar()
+                .selectDateByMonthNameAndDayNumber("Май", 10)
+                .checkDateTextBox("10.05.2018")
+                .openCalendar()
+                .selectDateByMonthNameAndDayNumber("Июнь", 30)
+                .checkDateTextBox("30.06.2018");
     }
 }
