@@ -2,6 +2,7 @@ package test;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -10,10 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.apache.log4j.Logger;
 import pages.MainPage;
 import pages.RouteChoicePage;
 
@@ -32,7 +31,7 @@ public class Test2 {
     static InputStream in;
     private static WebDriver driver;
 
-    @BeforeClass
+    @BeforeMethod
     public static void setupClass() {
         try {
             in = new FileInputStream("C:\\Users\\Vladislav_Goncharenk\\Desktop\\testTasks\\testTask\\src\\main\\resources\\driver.properties");
@@ -91,7 +90,7 @@ public class Test2 {
         mainPage.goTo()
                 .enterFrom("МОСКВА")
                 .enterTo("ТУЛА")
-                .enterDate("02.04.2018")
+                .enterDate("03.04.2018")
                 .clickSubmit();
         routeChoicePage
                 .selectTrain("739В")
@@ -104,7 +103,7 @@ public class Test2 {
         mainPage.goTo()
                 .enterFrom("МОСКВА")
                 .enterTo("ТУЛА")
-                .enterDate("02.04.2018")
+                .enterDate("03.04.2018")
                 .openCalendar()
                 .selectDateByMonthNameAndDayNumber("Апрель", 5)
                 .checkDateTextBox("05.04.2018")

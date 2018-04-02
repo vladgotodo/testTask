@@ -6,6 +6,9 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -23,7 +26,10 @@ public class RouteChoicePage {
     }
 
     public RouteChoicePage selectTrain(String trainNumber) {
+        final Wait<WebDriver> wait = new WebDriverWait(driver, 10, 1000);
         try {
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
+                    "/../../../../..//div[contains(text(),'Купе')]")));
             driver.findElement(By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
                     "/../../../../..//div[contains(text(),'Купе')]")).click();
         }
