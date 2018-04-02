@@ -3,7 +3,7 @@
 <suite name="All" verbose="2"><!-- parallel="classes" thread-count="2">-->
     <test name="Test">
         <classes>
-            <class name="test.Test2"/>
+            <class name="test.RzdTest"/>
         </classes>
     </test>
 </suite>

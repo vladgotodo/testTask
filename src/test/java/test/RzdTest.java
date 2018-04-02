@@ -25,8 +25,8 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class Test2 {
-    private static final Logger log = Logger.getLogger(Test2.class);
+public class RzdTest {
+    private static final Logger log = Logger.getLogger(RzdTest.class);
     static Properties prop = new Properties();
     static InputStream in;
     private static WebDriver driver;
@@ -104,14 +104,22 @@ public class Test2 {
                 .enterFrom("МОСКВА")
                 .enterTo("ТУЛА")
                 .enterDate("03.04.2018")
+                .checkDateTextBoxContains("03.04.2018")
                 .openCalendar()
                 .selectDateByMonthNameAndDayNumber("Апрель", 5)
-                .checkDateTextBox("05.04.2018")
+                .checkDateTextBoxContains("05.04.2018")
                 .openCalendar()
                 .selectDateByMonthNameAndDayNumber("Май", 10)
-                .checkDateTextBox("10.05.2018")
+                .checkDateTextBoxContains("10.05.2018")
                 .openCalendar()
                 .selectDateByMonthNameAndDayNumber("Июнь", 30)
-                .checkDateTextBox("30.06.2018");
+                .checkDateTextBoxContains("30.06.2018")
+                .openCalendar()
+                .clickLeftArrowOnCalendar()
+                .checkMonthIsDisplayed("Март")
+                .clickRightArrowOnCalendar()
+                .checkMonthIsDisplayed("Июнь")
+                .clickRightArrowOnCalendar()
+                .checkMonthIsDisplayed("Июль");
     }
 }

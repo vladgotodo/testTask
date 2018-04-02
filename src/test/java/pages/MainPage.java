@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MainPage {
     private static final Logger log = Logger.getLogger(MainPage.class);
     private final WebDriver driver;
+    Wait<WebDriver> wait;
 
     @FindBy(id = "name0")
     WebElement fromTextBox;
@@ -28,9 +29,14 @@ public class MainPage {
     ////////////Calendar popup controls
     @FindBy(id = "buttonDate")
     WebElement calendarButton;
+    @FindBy(xpath = "//span[@class='prev-month']/img")
+    WebElement leftArrow;
+    @FindBy(xpath = "//span[@class='next-month']/img")
+    WebElement rightArrow;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, 10, 1000);
     }
 
     public MainPage goTo() {
@@ -69,10 +75,35 @@ public class MainPage {
         return this;
     }
 
-    public MainPage checkDateTextBox(String date) {
+    public MainPage checkDateTextBoxContains(String date) {
         assertThat(dateTextBox.getAttribute("value"))
                 .as("Date")
-                .isEqualToIgnoringCase(date);
+                .containsIgnoringCase(date);
+        return this;
+    }
+
+    public MainPage checkMonthIsDisplayed(String month) {
+        By monthHeaderXpath = By.xpath("//div[@class='month_title']/span[text()='" + month + "']");
+        wait.until(ExpectedConditions.presenceOfElementLocated(monthHeaderXpath));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(monthHeaderXpath)));
+        WebElement monthHeader = driver.findElement(monthHeaderXpath);
+        assertThat(monthHeader.isDisplayed())
+                .as("Month " + month)
+                .isTrue();
+        return this;
+    }
+
+    public MainPage clickLeftArrowOnCalendar() {
+        wait = new WebDriverWait(driver, 10, 1000);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='prev-month']/img")));
+        leftArrow.click();
+        return this;
+    }
+
+    public MainPage clickRightArrowOnCalendar() {
+        wait = new WebDriverWait(driver, 10, 1000);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='next-month']/img")));
+        rightArrow.click();
         return this;
     }
 

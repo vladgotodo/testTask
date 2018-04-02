@@ -13,8 +13,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
 
 public class RouteChoicePage {
-    private static final Logger log = Logger.getLogger(MainPage.class);
+    private static final Logger log = Logger.getLogger(RouteChoicePage.class);
     private final WebDriver driver;
+    Wait<WebDriver> wait;
 
     @FindBy(xpath = "//a[contains(@class,'route-select-btn')]")
     List<WebElement> freeCarriages;
@@ -23,20 +24,19 @@ public class RouteChoicePage {
 
     public RouteChoicePage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, 10, 1000);
     }
 
     public RouteChoicePage selectTrain(String trainNumber) {
-        final Wait<WebDriver> wait = new WebDriverWait(driver, 10, 1000);
+        By selectedTrainXpath = By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
+                "/../../../../..//div[contains(text(),'Купе')]");
         try {
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
-                    "/../../../../..//div[contains(text(),'Купе')]")));
-            driver.findElement(By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
-                    "/../../../../..//div[contains(text(),'Купе')]")).click();
+            wait.until(ExpectedConditions.presenceOfElementLocated(selectedTrainXpath));
+            driver.findElement(selectedTrainXpath).click();
         }
         catch (StaleElementReferenceException e) {
             log.error(e);
-            driver.findElement(By.xpath("//span[@class='route-trnum' and .='" + trainNumber + "']" +
-                    "/../../../../..//div[contains(text(),'Купе')]")).click();
+            driver.findElement(selectedTrainXpath).click();
         }
         return this;
     }
