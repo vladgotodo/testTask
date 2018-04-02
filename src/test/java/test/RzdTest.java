@@ -34,7 +34,7 @@ public class RzdTest {
     @BeforeMethod
     public static void setupClass() {
         try {
-            in = new FileInputStream("C:\\Users\\Vladislav_Goncharenk\\Desktop\\testTasks\\testTask\\src\\main\\resources\\driver.properties");
+            in = new FileInputStream("src/main/resources/driver.properties");
             prop.load(in);
             in.close();
         } catch (IOException e) {
