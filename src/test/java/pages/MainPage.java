@@ -1,10 +1,8 @@
 package pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -56,10 +54,15 @@ public class MainPage {
         return this;
     }
 
-    public MainPage enterDate(String password) {
-        dateTextBox.clear();
-        dateTextBox.sendKeys(password);
-        dateTextBox.sendKeys(Keys.TAB);
+    public MainPage enterDate(String date) {
+        if (driver instanceof ChromeDriver) {
+            dateTextBox.clear();
+            dateTextBox.sendKeys(date);
+            dateTextBox.sendKeys(Keys.TAB);
+        }
+        else {
+            dateTextBox.sendKeys(date);
+        }
         return this;
     }
 

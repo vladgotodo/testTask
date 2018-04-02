@@ -1,10 +1,7 @@
 package pages;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -42,7 +39,15 @@ public class RouteChoicePage {
     }
 
     public RouteChoicePage selectFreeCarriage() {
-        freeCarriages.get(0).click();
+        By freeCarriagesXpath = By.xpath("//a[contains(@class,'route-select-btn')]");
+        try {
+            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(freeCarriagesXpath));
+            driver.findElement(freeCarriagesXpath).click();
+        }
+        catch (StaleElementReferenceException e) {
+            log.error(e);
+            driver.findElement(freeCarriagesXpath).click();
+        }
         for (WebElement freeSeat : freeSeats) {
             log.info("Seat number: " + freeSeat.getText() + " is free");
         }

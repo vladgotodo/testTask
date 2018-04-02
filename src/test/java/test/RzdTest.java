@@ -91,9 +91,10 @@ public class RzdTest {
                 .enterFrom("МОСКВА")
                 .enterTo("ТУЛА")
                 .enterDate("03.04.2018")
+                .checkDateTextBoxContains("03.04.2018")
                 .clickSubmit();
         routeChoicePage
-                .selectTrain("739В")
+                .selectTrain("135А")
                 .selectFreeCarriage();
     }
 
