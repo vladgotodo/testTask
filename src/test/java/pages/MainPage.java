@@ -46,13 +46,13 @@ public class MainPage {
 
     public MainPage enterFrom(String username) {
         fromTextBox.sendKeys(username);
-        dateTextBox.sendKeys(Keys.TAB);
+        fromTextBox.sendKeys(Keys.TAB);
         return this;
     }
 
     public MainPage enterTo(String password) {
         toTextBox.sendKeys(password);
-        dateTextBox.sendKeys(Keys.TAB);
+        toTextBox.sendKeys(Keys.TAB);
         return this;
     }
 

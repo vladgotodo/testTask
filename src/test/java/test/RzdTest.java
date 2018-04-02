@@ -42,7 +42,7 @@ public class RzdTest {
         }
 
         String driverProp = (String) prop.get("browserName");
-        switch (driverProp) {
+        switch (driverProp.toLowerCase()) {
             case ("firefox"):
                 WebDriverManager.firefoxdriver().setup();
                 driver = new FirefoxDriver();
